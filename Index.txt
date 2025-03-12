@@ -3,7 +3,7 @@ ___________________________________________________________________________
 2-code personnage
 Syndrome 1:David
 Syndrome 2:Julien
-Syndrome 3:Loic
+Syndrome 3:Lenny
 _______________________________________________________________________
 3-compte rendu
 4-gantt
