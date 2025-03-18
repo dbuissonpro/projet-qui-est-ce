@@ -1,27 +1,21 @@
 <?php
 include 'data.php';
 
-// Sécurisation des données POST et normalisation (suppression des espaces, mise en minuscule)
+// Récupérer les réponses
 $reponses = [
-    "lunettes" => trim(strtolower($_POST['lunettes'] ?? "non")),
-    "moustache" => trim(strtolower($_POST['moustache'] ?? "non")),
-    "chapeau" => trim(strtolower($_POST['chapeau'] ?? "non")),
-    "cheveux" => trim(strtolower($_POST['cheveux'] ?? "non")),
-    "boucle d'oreille" => trim(strtolower($_POST["boucle d'oreille"] ?? "non")),
-    "barbe" => trim(strtolower($_POST['barbe'] ?? "non")),
-    "noeud" => trim(strtolower($_POST['noeud'] ?? "non"))
+    "lunettes" => $_POST['lunettes'] ?? "non",
+    "moustache" => $_POST['moustache'] ?? "non",
+    "chapeau" => $_POST['chapeau'] ?? "non",
+    "cheveux" => $_POST['cheveux'] ?? "non",
+    "boucle d'oreille" => $_POST["boucle d'oreille"] ?? "non",
+    "barbe" => $_POST['barbe'] ?? "non",
+    "noeud" => $_POST['noeud'] ?? "non"
 ];
 
 // Filtrer les personnages qui correspondent aux réponses
 $personnagesRestants = array_filter($personnages, function ($perso) use ($reponses) {
     foreach ($reponses as $caracteristique => $valeur) {
-        // Vérification si la valeur a été sélectionnée dans le formulaire
-        if ($valeur !== "oui" && $valeur !== "non") {
-            continue; // Ignore si la réponse n'est pas définie
-        }
-
-        // Vérifier si la caractéristique du personnage correspond à la réponse utilisateur
-        if (isset($perso[$caracteristique]) && strtolower($perso[$caracteristique]) !== $valeur) {
+        if ($perso[$caracteristique] !== $valeur) {
             return false;
         }
     }
@@ -50,7 +44,11 @@ $personnageTrouve = count($personnagesRestants) === 1 ? array_values($personnage
                 $image = "images/".$perso['image'];
                 $class = ($personnageTrouve && $personnageTrouve['nom'] === $perso['nom']) ? "card selected" : "card";
                 echo "<div class='$class'>";
-                echo "<img src='$image' alt='Personnage'>";
+                if (file_exists($image)) {
+                    echo "<img src='$image' alt='Personnage'>";
+                } else {
+                    echo "<p class='error-message'>⚠ Erreur : Image non définie</p>";
+                }
                 echo "</div>";
             }
             ?>
