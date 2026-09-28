@@ -25,5 +25,5 @@ L'utilisateur sélectionne des caractéristiques (lunettes, moustache, chapeau, 
 
 ---
 
-**Développé par Barreira Julien**
+
 
